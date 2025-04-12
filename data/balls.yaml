@@ -1,0 +1,9 @@
+# 数据集路径
+train: ../yoloballtrain/images/trains  # 训练集路径
+val: ../yoloballtrain/images/val      # 验证集路径
+
+# 类别数量
+nc: 2
+
+# 类别名称
+names: ['football', 'basketball']

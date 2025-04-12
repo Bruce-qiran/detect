@@ -1,0 +1,13 @@
+train: C:\Users\20601\cra\yolov5\newvolley\images\trains
+val: C:\Users\20601\cra\yolov5\newvolley\images\val
+#test: cra\yolov5\volleyball\test\images
+
+nc: 2
+names: ['Basketabll','Volleyball']
+
+#roboflow:
+  #workspace: volleyball-recognizer
+  #project: volleyball-28tqq
+  #version: 2
+  #license: CC BY 4.0
+  #url: https://universe.roboflow.com/volleyball-recognizer/volleyball-28tqq/dataset/2
