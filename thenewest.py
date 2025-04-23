@@ -17,7 +17,7 @@ class DetectionApp:
         self.root = root
         self.root.title("智能目标检测系统")
         self.root.geometry("800x600")
-        self.root.resizable(False, False)  # 禁止调整窗口大小
+        self.root.resizable(True, True)  # 不禁止调整窗口大小
 
         # 视频相关参数
         self.cap = None
@@ -131,12 +131,44 @@ class DetectionApp:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         return frame
 
-    def update_display(self, frame):
+    #def update_display(self, frame):
         """更新视频显示"""
         img = Image.fromarray(frame)
         imgtk = ImageTk.PhotoImage(image=img)
         self.video_frame.imgtk = imgtk
         self.video_frame.configure(image=imgtk)
+
+    def update_display(self, frame):
+        """更新视频显示"""
+    # 获取视频显示区域的宽度和高度
+        display_width = self.video_frame.winfo_width()
+        display_height = self.video_frame.winfo_height()
+
+    # 获取原始帧的宽度和高度
+        frame_height, frame_width, _ = frame.shape
+
+    # 计算缩放比例
+        aspect_ratio = frame_width / frame_height
+        if display_width / display_height > aspect_ratio:
+        # 如果显示区域的宽高比大于视频帧的宽高比，按高度缩放
+            new_height = display_height
+            new_width = int(new_height * aspect_ratio)
+        else:
+        # 如果显示区域的宽高比小于或等于视频帧的宽高比，按宽度缩放
+            new_width = display_width
+            new_height = int(new_width / aspect_ratio)
+
+    # 缩放视频帧
+        resized_frame = cv2.resize(frame, (new_width, new_height))
+
+    # 将缩放后的帧转换为 Image 对象
+        img = Image.fromarray(resized_frame)
+        imgtk = ImageTk.PhotoImage(image=img)
+
+    # 更新 Canvas 显示
+        self.video_frame.imgtk = imgtk
+        self.video_frame.configure(image=imgtk)
+
 
     def on_close(self):
         """关闭窗口时的清理操作"""
